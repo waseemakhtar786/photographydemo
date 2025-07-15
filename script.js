@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- Sticky Header on Scroll ---
     const header = document.querySelector('.header');
+    const slides = document.querySelectorAll('.slide');
+    const revealElements = document.querySelectorAll('.reveal');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    // --- 1. Sticky Header ---
     if (header) {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -12,11 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- Hero Section Background Slider ---
-    const slides = document.querySelectorAll('.slide');
+    // --- 2. Hero Section Slider ---
     if (slides.length > 0) {
         let currentSlide = 0;
-        const slideInterval = 5000;
+        const slideInterval = 5000; // 5 seconds
         function nextSlide() {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
@@ -25,48 +29,40 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(nextSlide, slideInterval);
     }
 
-    // --- Scroll Reveal Animation ---
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { root: null, threshold: 0.1 });
-    revealElements.forEach(el => revealObserver.observe(el));
+    // --- 3. Scroll Reveal Animation ---
+    if (revealElements.length > 0) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
 
+        revealElements.forEach(el => revealObserver.observe(el));
+    }
 
-    // --- *** NEW: Mobile Menu Toggle Logic *** ---
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-
+    // --- 4. Mobile Menu Toggle ---
     if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            document.body.classList.toggle('no-scroll'); // Lock/unlock body scroll
-            
-            // Toggle icon between bars and times (close)
+            document.body.classList.toggle('no-scroll');
             const icon = menuToggle.querySelector('i');
-            if (icon.classList.contains('fa-bars')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         });
 
         // Close menu when a link is clicked
-        const navLinkItems = navLinks.querySelectorAll('a');
-        navLinkItems.forEach(link => {
+        const allNavLinks = navLinks.querySelectorAll('a');
+        allNavLinks.forEach(link => {
             link.addEventListener('click', () => {
                 if (navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
                     document.body.classList.remove('no-scroll');
-                    menuToggle.querySelector('i').classList.remove('fa-times');
-                    menuToggle.querySelector('i').classList.add('fa-bars');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 }
             });
         });
