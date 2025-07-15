@@ -1,8 +1,10 @@
-/* --- Global Styles & Variables --- */
+/* --- Global, Buttons, Header, Hero, etc. styles are the same as before --- */
+/* (Copy all styles from the previous version down to the media queries) */
+
 :root {
-    --primary-color: #A77A64; /* A soft, elegant brown */
-    --secondary-color: #3C3C3B; /* Dark charcoal */
-    --light-color: #F4F4F4; /* Light grey for backgrounds */
+    --primary-color: #A77A64;
+    --secondary-color: #3C3C3B;
+    --light-color: #F4F4F4;
     --white-color: #FFFFFF;
     --dark-color: #242423;
     --font-primary: 'Montserrat', sans-serif;
@@ -460,4 +462,90 @@ ul {
     .full-gallery-grid { column-count: 1; }
     .gallery-grid-preview { grid-template-columns: 1fr; }
     .social-icons a { margin: 0 0.7rem; }
+}
+
+/* CSS for scroll lock */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 992px) {
+    /* ... other 992px styles are the same ... */
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .contact-container { grid-template-columns: 1fr; }
+    .contact-info { text-align: center; margin-bottom: 2rem;}
+    .full-gallery-grid { column-count: 2; }
+}
+
+@media (max-width: 768px) {
+    /* --- Mobile Navigation Styles --- */
+    .mobile-menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        z-index: 1001; /* Must be on top */
+        color: var(--white-color); /* Color for hero section */
+        transition: color 0.4s ease;
+    }
+    
+    .header.scrolled .mobile-menu-toggle {
+        color: var(--secondary-color); /* Color for scrolled header */
+    }
+
+    .main-nav .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(36, 36, 35, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(-100%);
+        transition: transform 0.5s ease-in-out;
+        z-index: 1000;
+        padding: 0;
+    }
+
+    .main-nav .nav-links.active {
+        transform: translateY(0);
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0; /* Override previous margin */
+    }
+
+    .main-nav ul li {
+        margin: 1.5rem 0;
+    }
+
+    .main-nav ul li a {
+        color: var(--white-color);
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    .header.scrolled .main-nav ul li a {
+         color: var(--white-color); /* Links are always white on overlay */
+    }
+
+    /* Original menu is now the mobile menu; hide desktop menu behavior */
+    .main-nav ul { display: flex; } /* this rule needs to be correct for mobile overlay */
+
+    /* Hide the default desktop nav links */
+    .main-nav {
+       justify-content: space-between;
+    }
+    
+    .main-nav ul.nav-links:not(.active) {
+       display: none;
+    }
+     .main-nav ul.nav-links.active {
+       display: flex;
+    }
 }
