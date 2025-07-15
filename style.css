@@ -1,10 +1,8 @@
-/* --- Global, Buttons, Header, Hero, etc. styles are the same as before --- */
-/* (Copy all styles from the previous version down to the media queries) */
-
+/* --- Global Styles & Variables --- */
 :root {
-    --primary-color: #A77A64;
-    --secondary-color: #3C3C3B;
-    --light-color: #F4F4F4;
+    --primary-color: #A77A64; /* A soft, elegant brown */
+    --secondary-color: #3C3C3B; /* Dark charcoal */
+    --light-color: #F4F4F4; /* Light grey for backgrounds */
     --white-color: #FFFFFF;
     --dark-color: #242423;
     --font-primary: 'Montserrat', sans-serif;
@@ -27,6 +25,10 @@ body {
     background: var(--white-color);
     color: var(--dark-color);
 }
+/* This class will be toggled by JS to prevent scrolling when mobile menu is open */
+body.no-scroll {
+    overflow: hidden;
+}
 
 .container {
     max-width: 1200px;
@@ -37,9 +39,8 @@ body {
 .section {
     padding: 6rem 0;
 }
-/* Ensure the first section on gallery page has top padding */
 #full-gallery.section {
-    padding-top: 8rem; /* Extra padding to account for fixed header */
+    padding-top: 8rem; /* Extra padding to account for fixed header on gallery page */
 }
 
 .section-title {
@@ -73,7 +74,6 @@ ul {
     background-color: var(--light-color);
 }
 
-
 /* --- Buttons --- */
 .btn {
     display: inline-block;
@@ -92,17 +92,14 @@ ul {
     background: var(--primary-color);
     color: var(--white-color);
 }
-
 .btn-primary:hover {
     background: #8e6854;
     transform: translateY(-2px);
 }
-
 .btn-secondary {
     background: var(--secondary-color);
     color: var(--white-color);
 }
-
 .btn-secondary:hover {
     background: #505050;
     transform: translateY(-2px);
@@ -114,23 +111,20 @@ ul {
     width: 100%;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 1001;
     padding: 1rem 0;
     transition: all 0.4s ease;
     background: transparent;
 }
-
 .header.scrolled {
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
-
 .main-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 .logo {
     font-family: var(--font-secondary);
     font-size: 2rem;
@@ -138,31 +132,37 @@ ul {
     color: var(--white-color);
     transition: color 0.4s ease;
 }
-
 .header.scrolled .logo {
     color: var(--secondary-color);
 }
 
-.main-nav ul {
+.main-nav .nav-links {
     display: flex;
 }
-
-.main-nav ul li {
+.main-nav .nav-links li {
     margin-left: 2rem;
 }
-
-.main-nav ul li a {
+.main-nav .nav-links a {
     color: var(--white-color);
     font-weight: 500;
     transition: color 0.3s ease;
 }
-
-.header.scrolled .main-nav ul li a {
+.header.scrolled .nav-links a {
     color: var(--secondary-color);
 }
-
-.main-nav ul li a:hover {
+.main-nav .nav-links a:hover {
     color: var(--primary-color);
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 1002;
+    color: var(--white-color);
+    transition: color 0.4s ease;
 }
 
 /* --- Hero Section --- */
@@ -176,56 +176,40 @@ ul {
     color: var(--white-color);
     overflow: hidden;
 }
-
-.hero-slider {
+.hero-slider, .hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
 }
-
 .slide {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 2s ease-in-out;
 }
-
 .slide.active {
     opacity: 1;
 }
-
 .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
-
 .hero-content {
     position: relative;
     z-index: 2;
     padding: 2rem;
 }
-
 .hero-title {
     font-family: var(--font-secondary);
     font-size: 5rem;
-    font-weight: 700;
     line-height: 1.1;
     margin-bottom: 1rem;
 }
-
 .hero-subtitle {
     font-size: 1.2rem;
     margin-bottom: 2rem;
@@ -234,204 +218,39 @@ ul {
     margin-right: auto;
 }
 
-/* --- About Me Section --- */
-.about-container {
-    display: flex;
-    align-items: center;
-    gap: 4rem;
-}
-
-.about-image {
-    flex-basis: 40%;
-}
-
-.about-image img {
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.about-content {
-    flex-basis: 60%;
-}
-
-.camera-gear {
-    margin-top: 2rem;
-}
-
-.camera-gear h3 {
-    margin-bottom: 1rem;
-    font-family: var(--font-secondary);
-    font-size: 1.5rem;
-    color: var(--secondary-color);
-}
-
-.camera-gear ul li {
-    margin-bottom: 0.5rem;
-}
-
-.camera-gear ul li i {
-    color: var(--primary-color);
-    margin-right: 0.5rem;
-}
-
-/* --- Gallery Sections --- */
-.gallery-grid-preview {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.gallery-grid-preview img, .full-gallery-grid img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gallery-grid-preview img:hover, .full-gallery-grid img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-.full-gallery-grid {
-    column-count: 3;
-    column-gap: 1rem;
-}
-
-.gallery-item {
-    margin-bottom: 1rem;
-    break-inside: avoid; /* This is key for masonry layout */
-}
-.gallery-item img {
-    width: 100%;
-    border-radius: 8px;
-}
-
-/* --- Services Section --- */
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-}
-
-.service-card {
-    background: var(--white-color);
-    padding: 2.5rem;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-}
-
-.service-card h3 {
-    font-family: var(--font-secondary);
-    font-size: 1.8rem;
-    color: var(--secondary-color);
-}
-
-.service-card .price {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin: 1rem 0;
-}
-
-.service-card ul {
-    margin-bottom: 2rem;
-}
-
-.service-card ul li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-.service-card ul li:last-child {
-    border-bottom: none;
-}
-
-
-/* --- Contact Section --- */
-.contact-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.contact-info .social-icons {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.social-icons a {
-    color: var(--secondary-color);
-    font-size: 1.8rem;
-    margin-right: 1.5rem;
-    transition: color 0.3s ease;
-}
-
-.social-icons a:hover {
-    color: var(--primary-color);
-}
-
-.contact-info .location {
-    font-size: 1.1rem;
-}
-
-.contact-info .location i {
-    color: var(--primary-color);
-    margin-right: 0.5rem;
-}
-
-.contact-form form {
-    display: flex;
-    flex-direction: column;
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: var(--font-primary);
-    font-size: 1rem;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-/* --- Footer --- */
-.footer {
-    background: var(--dark-color);
-    color: var(--white-color);
-    text-align: center;
-    padding: 2rem 0;
-}
-
+/* --- About, Gallery, Services, Contact, Footer... --- */
+.about-container { display: flex; align-items: center; gap: 4rem; }
+.about-image { flex-basis: 40%; }
+.about-image img { border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.about-content { flex-basis: 60%; }
+.camera-gear { margin-top: 2rem; }
+.camera-gear h3 { margin-bottom: 1rem; font-family: var(--font-secondary); font-size: 1.5rem; }
+.camera-gear ul li i { color: var(--primary-color); margin-right: 0.5rem; }
+.gallery-grid-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.gallery-grid-preview img, .full-gallery-grid img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.gallery-grid-preview img:hover, .full-gallery-grid img:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+.full-gallery-grid { column-count: 3; column-gap: 1rem; }
+.gallery-item { margin-bottom: 1rem; break-inside: avoid; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.service-card { background: var(--white-color); padding: 2.5rem; text-align: center; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.08); transition: transform 0.3s ease; }
+.service-card:hover { transform: translateY(-10px); }
+.service-card h3 { font-family: var(--font-secondary); font-size: 1.8rem; }
+.service-card .price { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin: 1rem 0; }
+.service-card ul { margin-bottom: 2rem; }
+.service-card ul li { padding: 0.5rem 0; border-bottom: 1px solid #eee; }
+.contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.social-icons { margin: 1.5rem 0; }
+.social-icons a { color: var(--secondary-color); font-size: 1.8rem; margin-right: 1.5rem; transition: color 0.3s ease; }
+.social-icons a:hover { color: var(--primary-color); }
+.location i { color: var(--primary-color); margin-right: 0.5rem; }
+.contact-form form { display: flex; flex-direction: column; }
+.contact-form input, .contact-form textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; font-family: var(--font-primary); font-size: 1rem; }
+.contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--primary-color); }
+.footer { background: var(--dark-color); color: var(--white-color); text-align: center; padding: 2rem 0; }
 
 /* --- Animation on Scroll --- */
-.reveal {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
+.reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.reveal.active { opacity: 1; transform: translateY(0); }
 
 /* --- Responsive Media Queries --- */
 @media (max-width: 992px) {
@@ -442,60 +261,20 @@ ul {
     .contact-container { grid-template-columns: 1fr; }
     .contact-info { text-align: center; margin-bottom: 2rem;}
     .full-gallery-grid { column-count: 2; }
-}
-
-@media (max-width: 768px) {
-    .main-nav { flex-direction: column; }
-    .main-nav ul { margin-top: 1rem; }
-    .main-nav ul li { margin: 0 0.8rem; }
-    .logo { font-size: 1.8rem; }
-    .hero-title { font-size: 3rem; }
-    .hero-subtitle { font-size: 1rem; }
     .gallery-grid-preview { grid-template-columns: 1fr 1fr; }
-    .services-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 500px) {
-    .container { padding: 0 1rem; }
-    .section { padding: 4rem 0; }
-    .hero-title { font-size: 2.5rem; }
-    .full-gallery-grid { column-count: 1; }
-    .gallery-grid-preview { grid-template-columns: 1fr; }
-    .social-icons a { margin: 0 0.7rem; }
-}
-
-/* CSS for scroll lock */
-body.no-scroll {
-    overflow: hidden;
-}
-
-/* --- Responsive Media Queries --- */
-@media (max-width: 992px) {
-    /* ... other 992px styles are the same ... */
-    .services-grid { grid-template-columns: 1fr 1fr; }
-    .contact-container { grid-template-columns: 1fr; }
-    .contact-info { text-align: center; margin-bottom: 2rem;}
-    .full-gallery-grid { column-count: 2; }
 }
 
 @media (max-width: 768px) {
-    /* --- Mobile Navigation Styles --- */
+    .hero-title { font-size: 3rem; }
+    /* Mobile Navigation */
     .mobile-menu-toggle {
         display: block;
-        background: none;
-        border: none;
-        font-size: 1.8rem;
-        cursor: pointer;
-        z-index: 1001; /* Must be on top */
-        color: var(--white-color); /* Color for hero section */
-        transition: color 0.4s ease;
     }
-    
     .header.scrolled .mobile-menu-toggle {
-        color: var(--secondary-color); /* Color for scrolled header */
+        color: var(--secondary-color);
     }
-
     .main-nav .nav-links {
+        display: flex;
         position: fixed;
         top: 0;
         left: 0;
@@ -507,45 +286,27 @@ body.no-scroll {
         align-items: center;
         transform: translateY(-100%);
         transition: transform 0.5s ease-in-out;
-        z-index: 1000;
-        padding: 0;
     }
-
     .main-nav .nav-links.active {
         transform: translateY(0);
     }
-    
-    .main-nav ul {
-        flex-direction: column;
-        align-items: center;
-        margin-top: 0; /* Override previous margin */
-    }
-
-    .main-nav ul li {
+    .main-nav .nav-links li {
         margin: 1.5rem 0;
     }
-
-    .main-nav ul li a {
+    .main-nav .nav-links a,
+    .header.scrolled .nav-links a {
         color: var(--white-color);
         font-size: 1.5rem;
         font-weight: 700;
     }
-    .header.scrolled .main-nav ul li a {
-         color: var(--white-color); /* Links are always white on overlay */
-    }
+    .services-grid { grid-template-columns: 1fr; }
+}
 
-    /* Original menu is now the mobile menu; hide desktop menu behavior */
-    .main-nav ul { display: flex; } /* this rule needs to be correct for mobile overlay */
-
-    /* Hide the default desktop nav links */
-    .main-nav {
-       justify-content: space-between;
-    }
-    
-    .main-nav ul.nav-links:not(.active) {
-       display: none;
-    }
-     .main-nav ul.nav-links.active {
-       display: flex;
-    }
+@media (max-width: 500px) {
+    .container { padding: 0 1rem; }
+    .section { padding: 4rem 0; }
+    .hero-title { font-size: 2.5rem; }
+    .full-gallery-grid { column-count: 1; }
+    .gallery-grid-preview { grid-template-columns: 1fr; }
+    .social-icons a { margin: 0 0.7rem; }
 }
